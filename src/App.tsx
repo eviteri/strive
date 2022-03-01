@@ -1,26 +1,31 @@
-import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import React from 'react'
+import styled, { ThemeProvider } from 'styled-components'
+import GlobalStyles from './globalStyles'
+import theme from './theme'
+import Home from './pages/Home'
+import Header from './ui/molecules/Header'
+import query from './const/mediaQueries'
+
+const Main = styled.main`
+  margin: 0 auto;
+  width: 100%;
+  max-width: 575px;
+  @media ${query.lessThanMedium} {
+    max-width: inherit;
+    padding: 0 5%;
+  }
+`
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.tsx</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <ThemeProvider theme={theme}>
+      <GlobalStyles />
+      <Header />
+      <Main>
+        <Home />
+      </Main>
+    </ThemeProvider>
+  )
 }
 
-export default App;
+export default App
