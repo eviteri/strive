@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, memo } from 'react'
 import { HeaderWrapper, LogoWrapper } from './styledComponents'
 import AirLogo from '../../atoms/AirLogo'
 import { colors } from '../../../theme'
@@ -12,4 +12,4 @@ const Header = (): ReactElement => {
     </HeaderWrapper>
   )
 }
-export default Header
+export default memo(Header)

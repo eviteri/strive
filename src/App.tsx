@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { memo } from 'react'
 import styled, { ThemeProvider } from 'styled-components'
 import GlobalStyles from './globalStyles'
 import theme from './theme'
@@ -28,4 +28,4 @@ function App() {
   )
 }
 
-export default App
+export default memo(App)

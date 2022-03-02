@@ -3,7 +3,8 @@ import React, {
   useState,
   useCallback,
   useRef,
-  useEffect
+  useEffect,
+  memo
 } from 'react'
 import { H1, Body, LoadMore } from './styledComponents'
 import mockData from '../../api/mock-data.json'
@@ -19,11 +20,11 @@ const Home = (): ReactElement => {
   const [people, setPeople] = useState<People>(
     getPeopleChunk(mockData, lastChunkIndex)
   )
-  const [scrolledData, setScrolledData] = useState<People>(people)
+  const [filteredData, setFilteredData] = useState<People>([])
 
   const intersectionRation = 1.0
   const loadMoreRef = useRef(null)
-  const { isInViewPort, updateIsInViewPort } = useInViewPort(
+  const { isInViewPort, resetIsInViewPort } = useInViewPort(
     intersectionRation,
     loadMoreRef
   )
@@ -36,31 +37,35 @@ const Home = (): ReactElement => {
       if (nameRegex.test(value)) {
         setSearch(value)
         if (value === '') {
-          setPeople(scrolledData)
-          setLastChunkIndex(scrolledData.length)
-          updateIsInViewPort()
+          setPeople(getPeopleChunk(mockData, peopleCounter))
+          setLastChunkIndex(peopleCounter)
+          resetIsInViewPort()
         } else {
-          setPeople(filterPeople(value, mockData))
+          const filtered = filterPeople(value, mockData)
+          setPeople(getPeopleChunk(filtered, peopleCounter))
+          setFilteredData(filtered)
         }
       }
     },
-    [scrolledData, updateIsInViewPort]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    []
   )
 
   const loadMorePeope = useCallback(() => {
-    if (lastChunkIndex <= mockData.length - 1) {
+    const currentPeople = search === '' ? mockData : filteredData
+
+    if (lastChunkIndex <= currentPeople.length - 1) {
       const newChunkIndex = lastChunkIndex + peopleCounter
-      const newPeopleList = getPeopleChunk(mockData, newChunkIndex)
+      const newPeopleList = getPeopleChunk(currentPeople, newChunkIndex)
       setPeople(newPeopleList)
-      setScrolledData(newPeopleList)
       setLastChunkIndex(newChunkIndex)
     }
-  }, [lastChunkIndex])
+  }, [filteredData, lastChunkIndex, search])
 
   useEffect(() => {
-    if (isInViewPort && search === '') {
+    if (isInViewPort) {
       loadMorePeope()
-      updateIsInViewPort()
+      resetIsInViewPort()
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isInViewPort])
@@ -79,12 +84,16 @@ const Home = (): ReactElement => {
         onChange={handleOnChange}
       />
       {people.length ? (
-        <PeopleList people={people} />
+        <>
+          <PeopleList people={people} />
+          <LoadMore ref={loadMoreRef} type="button" onClick={loadMorePeope}>
+            Load More People
+          </LoadMore>
+        </>
       ) : (
         <div>No results found 🙁 </div>
       )}
-      <LoadMore ref={loadMoreRef}>Load More People</LoadMore>
     </div>
   )
 }
-export default Home
+export default memo(Home)

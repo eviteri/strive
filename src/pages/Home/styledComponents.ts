@@ -2,7 +2,11 @@ import styled from 'styled-components'
 import query from '../../const/mediaQueries'
 
 export const H1 = styled.h1`
-  font-size: 2rem;
+  font-family: Georgia;
+  font-style: normal;
+  font-weight: normal;
+  font-size: 40px;
+  line-height: 110%;
   margin-bottom: 60px;
   color: ${({ theme }) => theme.pageTitleColor};
   @media ${query.lessThanMedium} {
@@ -12,9 +16,12 @@ export const H1 = styled.h1`
 `
 
 export const Body = styled.p`
-  margin-bottom: 30px;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 150%;
+  margin-bottom: 31px;
 `
 
-export const LoadMore = styled.div`
+export const LoadMore = styled.button`
   visibility: hidden;
 `

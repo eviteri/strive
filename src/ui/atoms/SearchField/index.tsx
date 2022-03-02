@@ -1,8 +1,8 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, memo } from 'react'
 import { InputWrapper, MagnifyImage, InputElement } from './styledComponents'
 import magnifyingIcon from '../../../assets/icons/magnifiying.png'
 
-interface SearchFieldProps {
+export interface SearchFieldProps {
   search: string
   placeHolder: string
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void
@@ -25,4 +25,4 @@ const SearchField = ({
     </InputWrapper>
   )
 }
-export default SearchField
+export default memo(SearchField)

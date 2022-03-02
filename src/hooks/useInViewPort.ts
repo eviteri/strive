@@ -56,5 +56,5 @@ export default function useInViewPort(
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [])
 
-  return { isInViewPort, updateIsInViewPort: () => setIsInViewPort(false) }
+  return { isInViewPort, resetIsInViewPort: () => setIsInViewPort(false) }
 }

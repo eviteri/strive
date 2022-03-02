@@ -1,8 +1,8 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, memo } from 'react'
 import { People } from '../../../pages/Home/typings'
 import PersonItem from '../../molecules/PersonItem'
 
-interface PeopleListProps {
+export interface PeopleListProps {
   people: People
 }
 
@@ -15,4 +15,4 @@ const PeopleList = ({ people }: PeopleListProps): ReactElement => {
     </div>
   )
 }
-export default PeopleList
+export default memo(PeopleList)

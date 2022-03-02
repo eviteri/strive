@@ -4,6 +4,7 @@ import query from '../../../const/mediaQueries'
 export const HeaderWrapper = styled.header`
   height: 117px;
   position: relative;
+  border-top: ${({ theme }) => `3.43px solid ${theme.headerBorderColor}`};
   @media ${query.lessThanMedium} {
     height: 55px;
   }

@@ -1,4 +1,4 @@
-import React, { ReactElement } from 'react'
+import React, { ReactElement, memo } from 'react'
 
 interface AirLogoProps {
   widht?: number
@@ -13,6 +13,7 @@ const AirLogo = ({
 }: AirLogoProps): ReactElement => {
   return (
     <svg
+      role="img"
       width={widht}
       height={height}
       viewBox="0 0 30 13"
@@ -28,4 +29,4 @@ const AirLogo = ({
     </svg>
   )
 }
-export default AirLogo
+export default memo(AirLogo)

@@ -1,8 +1,14 @@
-import React, { ReactElement } from 'react'
-import { ListItem, PersonPicture } from './styledComponents'
+import React, { ReactElement, memo } from 'react'
+import {
+  ListItem,
+  PersonPicture,
+  PersonInfo,
+  PersonName,
+  Description
+} from './styledComponents'
 import { PersonDetails } from '../../../pages/Home/typings'
 
-interface PersonItemProps {
+export interface PersonItemProps {
   person: PersonDetails
 }
 
@@ -14,11 +20,11 @@ const PersonItem = ({ person }: PersonItemProps): ReactElement => {
       <PersonPicture>
         <img src={avatar} alt={name} />
       </PersonPicture>
-      <div>
-        <h3>{name}</h3>
-        <p>{description}</p>
-      </div>
+      <PersonInfo>
+        <PersonName>{name}</PersonName>
+        <Description>{description}</Description>
+      </PersonInfo>
     </ListItem>
   )
 }
-export default PersonItem
+export default memo(PersonItem)
