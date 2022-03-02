@@ -3,6 +3,7 @@ import { render, screen } from '@testing-library/react'
 import userEvent from '@testing-library/user-event'
 import { peopleCounter } from './helpers'
 import Home from '.'
+import TestWrapper from '../../setupTests'
 
 describe('Home', () => {
   beforeEach(() => {
@@ -17,13 +18,21 @@ describe('Home', () => {
   })
 
   it('Should render without errors', () => {
-    const { container } = render(<Home />)
+    const { container } = render(
+      <TestWrapper>
+        <Home />
+      </TestWrapper>
+    )
 
     expect(container).toBeInTheDocument()
   })
 
   it('Lazy loads people in sets of 100', () => {
-    render(<Home />)
+    render(
+      <TestWrapper>
+        <Home />
+      </TestWrapper>
+    )
 
     const loadMoreElement = screen.getByText(/Load More People/i)
 
@@ -78,7 +87,11 @@ describe('Home', () => {
   })
 
   it('Should filter users', () => {
-    render(<Home />)
+    render(
+      <TestWrapper>
+        <Home />
+      </TestWrapper>
+    )
 
     const searchFiled = screen.getByRole('textbox')
 

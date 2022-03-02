@@ -13,6 +13,7 @@ import PeopleList from '../../ui/organisms/PeopleList'
 import SearchField from '../../ui/atoms/SearchField'
 import { peopleCounter, filterPeople, getPeopleChunk } from './helpers'
 import useInViewPort from '../../hooks/useInViewPort'
+import { Helmet } from 'react-helmet-async'
 
 const Home = (): ReactElement => {
   const [search, setSearch] = useState<string>('')
@@ -71,29 +72,34 @@ const Home = (): ReactElement => {
   }, [isInViewPort])
 
   return (
-    <div>
-      <H1>The Person Finder</H1>
-      <Body>
-        If you just can’t find someone and need to know what they look like,
-        you’ve come to the right place! Just type the name of the person you are
-        looking for below into the search box!
-      </Body>
-      <SearchField
-        search={search}
-        placeHolder="Search in Air HQ"
-        onChange={handleOnChange}
-      />
-      {people.length ? (
-        <>
-          <PeopleList people={people} />
-          <LoadMore ref={loadMoreRef} type="button" onClick={loadMorePeope}>
-            Load More People
-          </LoadMore>
-        </>
-      ) : (
-        <div>No results found 🙁 </div>
-      )}
-    </div>
+    <>
+      <Helmet>
+        <title>Person Finder</title>
+      </Helmet>
+      <div>
+        <H1>The Person Finder</H1>
+        <Body>
+          If you just can’t find someone and need to know what they look like,
+          you’ve come to the right place! Just type the name of the person you
+          are looking for below into the search box!
+        </Body>
+        <SearchField
+          search={search}
+          placeHolder="Search in Air HQ"
+          onChange={handleOnChange}
+        />
+        {people.length ? (
+          <>
+            <PeopleList people={people} />
+            <LoadMore ref={loadMoreRef} type="button" onClick={loadMorePeope}>
+              Load More People
+            </LoadMore>
+          </>
+        ) : (
+          <div>No results found 🙁 </div>
+        )}
+      </div>
+    </>
   )
 }
 export default memo(Home)

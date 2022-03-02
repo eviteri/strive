@@ -1,5 +1,6 @@
 import React from 'react'
 import { render } from '@testing-library/react'
+import TestWrapper from './setupTests'
 import App from './App'
 
 describe('App', () => {
@@ -15,7 +16,11 @@ describe('App', () => {
   })
 
   it('Should render without errors', () => {
-    const { container } = render(<App />)
+    const { container } = render(
+      <TestWrapper>
+        <App />
+      </TestWrapper>
+    )
 
     expect(container).toBeInTheDocument()
   })
