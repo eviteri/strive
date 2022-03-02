@@ -16,5 +16,5 @@ export const Body = styled.p`
 `
 
 export const LoadMore = styled.div`
-  display: hidden;
+  visibility: hidden;
 `

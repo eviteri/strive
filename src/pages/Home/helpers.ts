@@ -1,6 +1,6 @@
 import { People } from './typings'
 
-export const peopleCounter = 50
+export const peopleCounter = 250
 
 export const filterPeople = (search: string, people: People): People => {
   const filteredPeople = people.filter(person => {

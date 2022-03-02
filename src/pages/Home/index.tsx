@@ -13,14 +13,13 @@ import SearchField from '../../ui/atoms/SearchField'
 import { peopleCounter, filterPeople, getPeopleChunk } from './helpers'
 import useInViewPort from '../../hooks/useInViewPort'
 
-mockData.sort((a, b) => (a.name > b.name ? 1 : -1))
-
 const Home = (): ReactElement => {
   const [search, setSearch] = useState<string>('')
   const [lastChunkIndex, setLastChunkIndex] = useState<number>(peopleCounter)
   const [people, setPeople] = useState<People>(
     getPeopleChunk(mockData, lastChunkIndex)
   )
+  const [scrolledData, setScrolledData] = useState<People>(people)
 
   const intersectionRation = 1.0
   const loadMoreRef = useRef(null)
@@ -37,14 +36,15 @@ const Home = (): ReactElement => {
       if (nameRegex.test(value)) {
         setSearch(value)
         if (value === '') {
-          setPeople(getPeopleChunk(mockData, peopleCounter))
-          setLastChunkIndex(peopleCounter)
+          setPeople(scrolledData)
+          setLastChunkIndex(scrolledData.length)
+          updateIsInViewPort()
         } else {
           setPeople(filterPeople(value, mockData))
         }
       }
     },
-    []
+    [scrolledData, updateIsInViewPort]
   )
 
   const loadMorePeope = useCallback(() => {
@@ -52,12 +52,13 @@ const Home = (): ReactElement => {
       const newChunkIndex = lastChunkIndex + peopleCounter
       const newPeopleList = getPeopleChunk(mockData, newChunkIndex)
       setPeople(newPeopleList)
+      setScrolledData(newPeopleList)
       setLastChunkIndex(newChunkIndex)
     }
   }, [lastChunkIndex])
 
   useEffect(() => {
-    if (isInViewPort) {
+    if (isInViewPort && search === '') {
       loadMorePeope()
       updateIsInViewPort()
     }
